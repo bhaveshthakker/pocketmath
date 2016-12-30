@@ -1,27 +1,6 @@
 package com.pocketmath.trader;
 
-/*import org.apache.http.client.ClientProtocolException;
-
-public class Processor {
-
-	 public static void main(String[] args) throws ClientProtocolException, IOException {
-		  HttpClient client = new DefaultHttpClient();
-		  HttpGet request = new HttpGet('http://restUrl');
-		  HttpResponse response = client.execute(request);
-		  BufferedReader rd = new BufferedReader (new InputStreamReader(response.getEntity().getContent()));
-		  String line = '';
-		  while ((line = rd.readLine()) != null) {
-		    System.out.println(line);
-		  }
-		 }
-
-}*/
-
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -39,6 +18,7 @@ import org.codehaus.jackson.map.type.TypeFactory;
 
 import com.pocketmath.trader.beans.TraderInfo;
 import com.pocketmath.trader.beans.TransactionInfo;
+import com.pocketmath.trader.util.RestClient;
 
 public class Processor {
 
@@ -190,36 +170,3 @@ public class Processor {
 
 }
 
-class RestClient {
-
-	public static String callGet(String requestUrl, Map<String, String> headers) throws IOException {
-
-		URL url = new URL(requestUrl);
-		HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-		conn.setRequestMethod("GET");
-		// conn.setRequestProperty("Accept", "application/json");
-		for (String key : headers.keySet()) {
-			conn.setRequestProperty(key, headers.get(key));
-		}
-
-		if (conn.getResponseCode() != 200) {
-			throw new RuntimeException("Failed : HTTP error code : " + conn.getResponseCode());
-		}
-
-		BufferedReader br = new BufferedReader(new InputStreamReader((conn.getInputStream())));
-
-		String output;
-		StringBuffer apiResp = new StringBuffer();
-		// System.out.println("Output from Server .... \n");
-		while ((output = br.readLine()) != null) {
-			// System.out.println(output);
-			apiResp.append(output);
-		}
-
-		conn.disconnect();
-
-		return apiResp.toString();
-
-	}
-
-}
